@@ -1,0 +1,33 @@
+import requests
+from bs4 import BeautifulSoup
+
+r1 = requests.get('https://github.com/login')
+soup = BeautifulSoup(r1.text, 'html.parser')
+token = soup.find(name='input', attrs={'name': 'authenticity_token'}).get('value')
+cook = r1.cookies
+cook_str= 'logged_in=%s;_gh_sess=%s' %(cook['logged_in'],cook['_gh_sess'])
+p1 = requests.post(url='https://github.com/session',
+                   headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                            'Accept-Encoding': 'gzip, deflate, br',
+                            'Accept-Language': 'zh-CN,zh;q=0.8',
+                            'Cache-Control': 'max-age=0',
+                            'Connection': 'keep-alive',
+                            'Content-Length': '184',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Cookie': cook_str,
+                            'Host': 'github.com',
+                            'Origin': 'https://github.com',
+                            'Referer': 'https://github.com/login',
+                            'Upgrade-Insecure-Requests': '1',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'
+                            },
+                   data={'utf8': '✓',
+                         'authenticity_token':token,
+                         'login': 'goodboydavidhe@gmail.com',
+                         'password': 'david19860511',
+                         'commit': 'Sign in'
+                         })
+
+soup_login=BeautifulSoup(p1.text,'html.parser')
+user_name=soup_login.find(name='strong',attrs={'class':'css-truncate-target'}).string
+print('名称：',user_name)
