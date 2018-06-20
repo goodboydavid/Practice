@@ -24,7 +24,7 @@ p1 = requests.post(url='https://github.com/session',
                    data={'utf8': '✓',
                          'authenticity_token':token,
                          'login': 'goodboydavidhe@gmail.com',
-                         'password': 'david19860511',
+                         'password': '*********',
                          'commit': 'Sign in'
                          })
 
